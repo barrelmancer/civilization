@@ -1,0 +1,5 @@
+name: civilization
+version: '1.0-SNAPSHOT'
+main: org.barrelmancer.civilization.Civilization
+api-version: '1.21'
+load: STARTUP
