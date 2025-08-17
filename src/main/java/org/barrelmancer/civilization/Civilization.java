@@ -1,5 +1,6 @@
 package org.barrelmancer.civilization;
 
+import org.barrelmancer.civilization.constants.ThirstConstants;
 import org.barrelmancer.civilization.events.GeneralEvents;
 import org.barrelmancer.civilization.events.ThirstEvents;
 import org.barrelmancer.civilization.util.StatusBar;
@@ -32,7 +33,7 @@ public final class Civilization extends JavaPlugin {
         log.info("Plugin has enabled successfully!");
         civilization = this;
 
-        thirstTask = getServer().getScheduler().runTaskTimer(this, Thirst.getInstance(), 20, Constants.BASE_THIRST_DECREASE_RATE);
+        thirstTask = getServer().getScheduler().runTaskTimer(this, Thirst.getInstance(), 20, ThirstConstants.BASE_THIRST_DECREASE_RATE);
         statusBarTask = getServer().getScheduler().runTaskTimer(this, StatusBar.getInstance(), 0, 5);
         temperatureTask = getServer().getScheduler().runTaskTimer(this, Temperature.getInstance(), 0, 5);
     }
