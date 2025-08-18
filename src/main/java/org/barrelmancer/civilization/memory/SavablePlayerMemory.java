@@ -8,5 +8,6 @@ public class SavablePlayerMemory {
     public void setThirst(int thirst) {
         this.thirst = thirst;
     }
+
     private int thirst = 100;
 }

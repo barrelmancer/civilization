@@ -4,16 +4,12 @@ import org.barrelmancer.civilization.memory.DynamicPlayerMemory;
 import org.barrelmancer.civilization.memory.SavablePlayerMemory;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class PlayerMemoryUtility {
-    private static final Logger log = LoggerFactory.getLogger(PlayerMemoryUtility.class);
-
     private static Map<UUID, SavablePlayerMemory> savablePlayerMemory = new HashMap<>();
     private static Map<UUID, DynamicPlayerMemory> dynamicPlayerMemory = new HashMap<>();
 
@@ -35,7 +31,6 @@ public class PlayerMemoryUtility {
     }
 
     public static void setSavablePlayerMemory(Player p, SavablePlayerMemory memory) {
-        log.info(String.valueOf(memory.getThirst()));
         savablePlayerMemory.put(p.getUniqueId(), memory);
     }
 

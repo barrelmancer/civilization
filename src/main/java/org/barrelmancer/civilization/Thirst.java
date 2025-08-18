@@ -19,7 +19,7 @@ public class Thirst implements Runnable {
         for (Player p : Bukkit.getOnlinePlayers()) {
             SavablePlayerMemory memory = PlayerMemoryUtility.getSavablePlayerMemory(p);
             if (memory.getThirst() <= 20) {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 1, false, false, false));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, ThirstConstants.BASE_THIRST_DECREASE_RATE + 1, 1, false, false, false));
             }
             decreaseThirst(p, ThirstConstants.BASE_THIRST_DECREASE_AMOUNT);
         }

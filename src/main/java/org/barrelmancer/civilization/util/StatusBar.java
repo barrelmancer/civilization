@@ -35,11 +35,11 @@ public class StatusBar implements Runnable {
                 .text(thirstBar)
                 .style(Style.style(TextColor.color(0x27D8DB), TextDecoration.BOLD))
                 .append(Component
-                        .text(" ".repeat(32-thirstBar.length()-temperatureBar.length())))
+                        .text(" ".repeat(32 - thirstBar.length() - temperatureBar.length())))
                 .append(
-                    Component
-                            .text(temperatureBar)
-                            .style(Style.style(TextColor.color(0xDB7827), TextDecoration.BOLD))
+                        Component
+                                .text(temperatureBar)
+                                .style(Style.style(TextColor.color(0xDB7827), TextDecoration.BOLD))
                 );
         p.sendActionBar(statusBarText);
     }

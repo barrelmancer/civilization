@@ -11,7 +11,7 @@ import java.util.Map;
 public class TemperatureConstants {
     public static final float BASE_TEMPERATURE = 36.6f;
     public static final float BASE_MIN_TEMPERATURE = 36.3f;
-    public static final float BASE_MAX_TEMPERATURE = 36.9f;
+    public static final float BASE_MAX_TEMPERATURE = 37.6f;
     public static final float NIGHT_TEMPERATURE_DECREASE = -0.8f;
     public static final float CAMPFIRE_TEMPERATURE_INCREASE = 1.5f;
 
@@ -32,6 +32,7 @@ public class TemperatureConstants {
     public static final List<Biome> SNOWY_BIOMES = new ArrayList<>(Arrays.asList(
             Biome.SNOWY_TAIGA, Biome.SNOWY_BEACH, Biome.SNOWY_PLAINS, Biome.SNOWY_SLOPES,
             Biome.ICE_SPIKES, Biome.TAIGA, Biome.OLD_GROWTH_PINE_TAIGA, Biome.OLD_GROWTH_SPRUCE_TAIGA,
-            Biome.FROZEN_OCEAN, Biome.FROZEN_PEAKS, Biome.FROZEN_OCEAN, Biome.DEEP_FROZEN_OCEAN
+            Biome.FROZEN_OCEAN, Biome.FROZEN_PEAKS, Biome.FROZEN_OCEAN, Biome.DEEP_FROZEN_OCEAN,
+            Biome.WINDSWEPT_HILLS, Biome.WINDSWEPT_GRAVELLY_HILLS
     ));
 }

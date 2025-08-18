@@ -11,6 +11,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Campfire;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Temperature implements Runnable {
     private final static Temperature instance = new Temperature();
@@ -36,21 +38,33 @@ public class Temperature implements Runnable {
                 temperature += TemperatureConstants.LEATHER_ARMOR_TEMPERATURE.getOrDefault(item.getType(), 0.0f);
             }
         }
+
         if (isNearActiveCampfire(p, 5)) {
             temperature += TemperatureConstants.CAMPFIRE_TEMPERATURE_INCREASE;
         }
+
         if (world.getTime() >= 13000 && world.getTime() <= 23000) {
             temperature += TemperatureConstants.NIGHT_TEMPERATURE_DECREASE;
         }
+
         if (temperature <= TemperatureConstants.BASE_MIN_TEMPERATURE) {
             p.setFreezeTicks(100);
         }
+
         if (TemperatureConstants.DESERT_BIOMES.contains(p.getLocation().getBlock().getBiome())) {
             temperature += TemperatureConstants.DESERT_TEMPERATURE_DELTA;
         }
+
         if (TemperatureConstants.SNOWY_BIOMES.contains(p.getLocation().getBlock().getBiome())) {
             temperature += TemperatureConstants.SNOWY_TEMPERATURE_DELTA;
         }
+
+        if (temperature > TemperatureConstants.BASE_MAX_TEMPERATURE) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 21, 1, false, false, false));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 21, 1, false, false, false));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 21, 1, false, false, false));
+        }
+
         return (float) Math.ceil(temperature * 100.0f) / 100.0f;
     }
 

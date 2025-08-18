@@ -8,5 +8,6 @@ public class DynamicPlayerMemory {
     public void setTemperature(float temperature) {
         this.temperature = temperature;
     }
+
     private float temperature = 36.6f;
 }
