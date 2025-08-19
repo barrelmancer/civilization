@@ -3,3 +3,8 @@ version: '1.0-SNAPSHOT'
 main: org.barrelmancer.civilization.Civilization
 api-version: '1.21'
 load: STARTUP
+commands:
+  campfiredebug:
+    description: Debug campfire cooking system
+    usage: /campfiredebug [test|give|status]
+    permission: campfire.debug

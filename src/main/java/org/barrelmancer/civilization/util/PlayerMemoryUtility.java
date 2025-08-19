@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerMemoryUtility {
-    private static Map<UUID, SavablePlayerMemory> savablePlayerMemory = new HashMap<>();
-    private static Map<UUID, DynamicPlayerMemory> dynamicPlayerMemory = new HashMap<>();
+    private static final Map<UUID, SavablePlayerMemory> savablePlayerMemory = new HashMap<>();
+    private static final Map<UUID, DynamicPlayerMemory> dynamicPlayerMemory = new HashMap<>();
 
     public static DynamicPlayerMemory getDynamicPlayerMemory(Player p) {
         return dynamicPlayerMemory.get(p.getUniqueId());

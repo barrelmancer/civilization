@@ -1,6 +1,10 @@
 package org.barrelmancer.civilization;
 
+import org.barrelmancer.civilization.campfire.CampfireCooking;
+import org.barrelmancer.civilization.campfire.CampfireManager;
 import org.barrelmancer.civilization.constants.ThirstConstants;
+import org.barrelmancer.civilization.events.CampfireEvents;
+import org.barrelmancer.civilization.events.CampfireGUIEvents;
 import org.barrelmancer.civilization.events.GeneralEvents;
 import org.barrelmancer.civilization.events.ThirstEvents;
 import org.barrelmancer.civilization.util.StatusBar;
@@ -11,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public final class Civilization extends JavaPlugin {
     private static final Logger log = LoggerFactory.getLogger(Civilization.class);
-    private static Civilization civilization;
+    public static Civilization civilization;
 
     private static BukkitTask thirstTask;
 
@@ -26,6 +30,12 @@ public final class Civilization extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        CampfireManager.initialize(this);
+        CampfireCooking.initialize(this);
+
+        getServer().getPluginManager().registerEvents(new CampfireGUIEvents(), this);
+        getServer().getPluginManager().registerEvents(new CampfireEvents(), this);
+
         getServer().getPluginManager().registerEvents(new GeneralEvents(), this);
         getServer().getPluginManager().registerEvents(new ThirstEvents(), this);
 
@@ -39,6 +49,18 @@ public final class Civilization extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        try {
+            CampfireCooking.shutdown();
+            log.info("Stopped campfire cooking timer");
+
+            if (CampfireManager.getInstance() != null) {
+                CampfireManager.getInstance().cleanup();
+                log.info("CampfireManager cleaned up successfully");
+            }
+
+        } catch (Exception e) {
+            log.info("Error during plugin shutdown: {} - {}", e.getClass().getSimpleName(), e.getMessage());
+        }
         log.info("Plugin has disabled successfully!");
     }
 }

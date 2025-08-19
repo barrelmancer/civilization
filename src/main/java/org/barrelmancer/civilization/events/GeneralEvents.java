@@ -1,9 +1,11 @@
 package org.barrelmancer.civilization.events;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.barrelmancer.civilization.constants.TemperatureConstants;
+import org.barrelmancer.civilization.constants.UIConstants;
 import org.barrelmancer.civilization.memory.DynamicPlayerMemory;
 import org.barrelmancer.civilization.memory.SavablePlayerMemory;
 import org.barrelmancer.civilization.util.PlayerMemoryUtility;
@@ -72,8 +74,7 @@ public class GeneralEvents implements Listener {
         if (temperature != null) {
             List<Component> lore = Collections.singletonList(
                     Component.text("+ " + temperature + "°C")
-                            .color(TextColor.color(0xC4A297))
-                            .decoration(TextDecoration.ITALIC, false)
+                            .style(Style.style(TextColor.color(UIConstants.INFORMATION_COLOR), TextDecoration.ITALIC.withState(false)))
             );
             meta.lore(lore);
             clickedItem.setItemMeta(meta);
