@@ -3,3 +3,8 @@ version: '1.0-SNAPSHOT'
 main: org.barrelmancer.civilization.Civilization
 api-version: '1.21'
 load: STARTUP
+commands:
+  setAge:
+    description: Sets a player's age
+    usage: /setAge <player> <age>
+    permission: civilization.setage

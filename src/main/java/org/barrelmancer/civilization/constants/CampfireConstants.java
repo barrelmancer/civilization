@@ -14,21 +14,19 @@ public class CampfireConstants {
     public static final String GUI_TITLE = "Campfire";
     public static final int ROWS = 3;
 
-    public static final Material DECORATIVE = Material.GRAY_STAINED_GLASS_PANE;
-    public static final Material DISH_DECORATIVE = Material.WHITE_STAINED_GLASS_PANE;
     public static final ArrayList<Integer> INGREDIENT_SLOTS = new ArrayList<>();
+
+    public static final int BOWL_SLOT = 12;
+    public static final int OUTPUT_SLOT = 16;
+    public static final Material OUTPUT_ITEM = Material.RABBIT_STEW;
+    public static final int OUTPUT_ITEM_CUSTOM_MODEL_DATA = 1201;
+    public static final Map<Material, Integer> INGREDIENT_SATURATION = new HashMap<>();
 
     static {
         INGREDIENT_SLOTS.add(1);
         INGREDIENT_SLOTS.add(10);
         INGREDIENT_SLOTS.add(19);
     }
-
-    public static final int BOWL_SLOT = 12;
-    public static final int OUTPUT_SLOT = 14;
-
-    public static final Material DISH_ITEM = Material.RABBIT_STEW;
-    public static final Map<Material, Integer> INGREDIENT_SATURATION = new HashMap<>();
 
     static {
         INGREDIENT_SATURATION.put(Material.CARROT, 3);

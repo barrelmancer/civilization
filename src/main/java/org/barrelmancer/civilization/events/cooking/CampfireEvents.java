@@ -1,7 +1,6 @@
-package org.barrelmancer.civilization.events;
+package org.barrelmancer.civilization.events.cooking;
 
 import net.kyori.adventure.text.Component;
-import org.barrelmancer.civilization.Civilization;
 import org.barrelmancer.civilization.campfire.CampfireGUI;
 import org.barrelmancer.civilization.campfire.CampfireManager;
 import org.barrelmancer.civilization.constants.UIConstants;
@@ -44,7 +43,7 @@ public class CampfireEvents implements Listener {
                             .color(UIConstants.WARNING_COLOR));
             return;
         }
-        CampfireGUI inventory = new CampfireGUI(Civilization.getCivilization(), block.getLocation());
+        CampfireGUI inventory = new CampfireGUI(block.getLocation());
         player.openInventory(inventory.getInventory());
     }
 
@@ -53,7 +52,7 @@ public class CampfireEvents implements Listener {
         Block block = event.getBlock();
         if (block.getType() != Material.CAMPFIRE) return;
         try {
-            CampfireManager.getInstance().removeCampfireData(block.getLocation());
+            CampfireManager.getInstance().removeCookingData(block.getLocation());
         } catch (IllegalStateException e) {
             log.info("CampfireManager not initialized, cannot clean up data");
         } catch (Exception e) {

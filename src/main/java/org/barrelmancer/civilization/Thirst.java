@@ -16,17 +16,32 @@ public class Thirst implements Runnable {
 
     @Override
     public void run() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            SavablePlayerMemory memory = PlayerMemoryUtility.getSavablePlayerMemory(p);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            SavablePlayerMemory memory = PlayerMemoryUtility.getSavablePlayerMemory(player);
             if (memory.getThirst() <= 20) {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, ThirstConstants.BASE_THIRST_DECREASE_RATE + 1, 1, false, false, false));
+                player.addPotionEffect(new PotionEffect(
+                        PotionEffectType.SLOWNESS,
+                        ThirstConstants.BASE_THIRST_DECREASE_RATE + 1,
+                        1, false, false, false));
+
+                player.addPotionEffect(new PotionEffect(
+                        PotionEffectType.WITHER,
+                        ThirstConstants.BASE_THIRST_DECREASE_RATE + 1,
+                        0, false, false, false));
             }
-            decreaseThirst(p, ThirstConstants.BASE_THIRST_DECREASE_AMOUNT);
+            if (memory.getThirst() <= 5) {
+                player.addPotionEffect(new PotionEffect(
+                        PotionEffectType.SLOWNESS,
+                        ThirstConstants.BASE_THIRST_DECREASE_RATE + 1,
+                        3, false, false, false));
+            }
+            decreaseThirst(player, ThirstConstants.BASE_THIRST_DECREASE_AMOUNT);
         }
+
     }
 
-    public static void decreaseThirst(Player p, int value) {
-        SavablePlayerMemory memory = PlayerMemoryUtility.getSavablePlayerMemory(p);
+    public static void decreaseThirst(Player player, int value) {
+        SavablePlayerMemory memory = PlayerMemoryUtility.getSavablePlayerMemory(player);
         if (memory.getThirst() <= 0) {
             return;
         } else if ((memory.getThirst() - value) < 0) {
@@ -34,7 +49,7 @@ public class Thirst implements Runnable {
             return;
         }
         memory.setThirst(memory.getThirst() - value);
-        PlayerMemoryUtility.setSavablePlayerMemory(p, memory);
+        PlayerMemoryUtility.setSavablePlayerMemory(player, memory);
     }
 
     public static void increaseThirst(Player p, int value) {

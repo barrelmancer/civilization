@@ -28,8 +28,9 @@ public class StatusBar implements Runnable {
         }
     }
 
-    private static void updateStatusBar(Player p, int thirst, float temperature) {
-        String thirstBar = "[" + thirst + " / 100]";
+    private static void updateStatusBar(Player player, int thirst, float temperature) {
+        //String thirstBar = "[" + thirst + " / 100]";
+        String thirstBar = UIUtils.buildBar(thirst);
         String temperatureBar = "[" + temperature + "°C]";
         Component statusBarText = Component
                 .text(thirstBar)
@@ -41,7 +42,7 @@ public class StatusBar implements Runnable {
                                 .text(temperatureBar)
                                 .style(Style.style(TextColor.color(0xDB7827), TextDecoration.BOLD))
                 );
-        p.sendActionBar(statusBarText);
+        player.sendActionBar(statusBarText);
     }
 
     public static StatusBar getInstance() {

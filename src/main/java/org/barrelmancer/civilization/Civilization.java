@@ -1,12 +1,13 @@
 package org.barrelmancer.civilization;
 
-import org.barrelmancer.civilization.campfire.CampfireCooking;
-import org.barrelmancer.civilization.campfire.CampfireManager;
 import org.barrelmancer.civilization.constants.ThirstConstants;
-import org.barrelmancer.civilization.events.CampfireEvents;
-import org.barrelmancer.civilization.events.CampfireGUIEvents;
-import org.barrelmancer.civilization.events.GeneralEvents;
-import org.barrelmancer.civilization.events.ThirstEvents;
+import org.barrelmancer.civilization.cooking.CookingSystemFactory;
+import org.barrelmancer.civilization.events.*;
+import org.barrelmancer.civilization.events.cooking.BaseCookingGUIEvents;
+import org.barrelmancer.civilization.events.cooking.CampfireGUIEvents;
+import org.barrelmancer.civilization.events.cooking.CauldronGUIEvents;
+import org.barrelmancer.civilization.events.cooking.CookingEvents;
+import org.barrelmancer.civilization.util.SetAgeCommand;
 import org.barrelmancer.civilization.util.StatusBar;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -30,18 +31,19 @@ public final class Civilization extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        CampfireManager.initialize(this);
-        CampfireCooking.initialize(this);
+        CookingSystemFactory.getInstance().initializeAllSystems(this);
 
+        getServer().getPluginManager().registerEvents(new CookingEvents(), this);
         getServer().getPluginManager().registerEvents(new CampfireGUIEvents(), this);
-        getServer().getPluginManager().registerEvents(new CampfireEvents(), this);
+        getServer().getPluginManager().registerEvents(new CauldronGUIEvents(), this);
 
         getServer().getPluginManager().registerEvents(new GeneralEvents(), this);
         getServer().getPluginManager().registerEvents(new ThirstEvents(), this);
-
+        getServer().getPluginManager().registerEvents(new WorldEvents(), this);
         thirstTask = getServer().getScheduler().runTaskTimer(this, Thirst.getInstance(), 20, ThirstConstants.BASE_THIRST_DECREASE_RATE);
         statusBarTask = getServer().getScheduler().runTaskTimer(this, StatusBar.getInstance(), 0, 5);
         temperatureTask = getServer().getScheduler().runTaskTimer(this, Temperature.getInstance(), 0, 5);
+        getCommand("setAge").setExecutor(new SetAgeCommand());
         log.info("Plugin has enabled successfully!");
         civilization = this;
     }
@@ -49,18 +51,7 @@ public final class Civilization extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        try {
-            CampfireCooking.shutdown();
-            log.info("Stopped campfire cooking timer");
-
-            if (CampfireManager.getInstance() != null) {
-                CampfireManager.getInstance().cleanup();
-                log.info("CampfireManager cleaned up successfully");
-            }
-
-        } catch (Exception e) {
-            log.info("Error during plugin shutdown: {} - {}", e.getClass().getSimpleName(), e.getMessage());
-        }
+        CookingSystemFactory.getInstance().shutdownTasks();
         log.info("Plugin has disabled successfully!");
     }
 }

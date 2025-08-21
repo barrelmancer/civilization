@@ -13,21 +13,21 @@ public class PlayerMemoryUtility {
     private static final Map<UUID, SavablePlayerMemory> savablePlayerMemory = new HashMap<>();
     private static final Map<UUID, DynamicPlayerMemory> dynamicPlayerMemory = new HashMap<>();
 
-    public static DynamicPlayerMemory getDynamicPlayerMemory(Player p) {
-        return dynamicPlayerMemory.get(p.getUniqueId());
+    public static DynamicPlayerMemory getDynamicPlayerMemory(Player player) {
+        return dynamicPlayerMemory.get(player.getUniqueId());
     }
 
-    public static void setDynamicPlayerMemory(Player p, DynamicPlayerMemory memory) {
-        dynamicPlayerMemory.put(p.getUniqueId(), memory);
+    public static void setDynamicPlayerMemory(Player player, DynamicPlayerMemory memory) {
+        dynamicPlayerMemory.put(player.getUniqueId(), memory);
     }
 
-    public static SavablePlayerMemory getSavablePlayerMemory(Player p) {
-        if (!savablePlayerMemory.containsKey(p.getUniqueId())) {
+    public static SavablePlayerMemory getSavablePlayerMemory(Player player) {
+        if (!savablePlayerMemory.containsKey(player.getUniqueId())) {
             SavablePlayerMemory m = new SavablePlayerMemory();
-            savablePlayerMemory.put(p.getUniqueId(), m);
+            savablePlayerMemory.put(player.getUniqueId(), m);
             return m;
         }
-        return savablePlayerMemory.get(p.getUniqueId());
+        return savablePlayerMemory.get(player.getUniqueId());
     }
 
     public static void setSavablePlayerMemory(Player p, SavablePlayerMemory memory) {

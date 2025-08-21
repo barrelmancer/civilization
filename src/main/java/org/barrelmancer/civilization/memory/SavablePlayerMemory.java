@@ -1,6 +1,9 @@
 package org.barrelmancer.civilization.memory;
 
 public class SavablePlayerMemory {
+    private int thirst = 100;
+    private int age = 0;
+
     public int getThirst() {
         return thirst;
     }
@@ -9,5 +12,11 @@ public class SavablePlayerMemory {
         this.thirst = thirst;
     }
 
-    private int thirst = 100;
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

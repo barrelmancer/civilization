@@ -22,24 +22,24 @@ public class Temperature implements Runnable {
 
     @Override
     public void run() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            DynamicPlayerMemory memory = PlayerMemoryUtility.getDynamicPlayerMemory(p);
-            float temperature = checkTemperature(p);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            DynamicPlayerMemory memory = PlayerMemoryUtility.getDynamicPlayerMemory(player);
+            float temperature = checkTemperature(player);
             memory.setTemperature(temperature);
         }
     }
 
-    private static float checkTemperature(Player p) {
-        World world = p.getWorld();
+    private static float checkTemperature(Player player) {
+        World world = player.getWorld();
         float temperature = TemperatureConstants.BASE_TEMPERATURE;
-        ItemStack[] armor = p.getInventory().getArmorContents();
+        ItemStack[] armor = player.getInventory().getArmorContents();
         for (ItemStack item : armor) {
             if (item != null) {
                 temperature += TemperatureConstants.LEATHER_ARMOR_TEMPERATURE.getOrDefault(item.getType(), 0.0f);
             }
         }
 
-        if (isNearActiveCampfire(p, 5)) {
+        if (isNearActiveCampfire(player, 5)) {
             temperature += TemperatureConstants.CAMPFIRE_TEMPERATURE_INCREASE;
         }
 
@@ -48,21 +48,27 @@ public class Temperature implements Runnable {
         }
 
         if (temperature <= TemperatureConstants.BASE_MIN_TEMPERATURE) {
-            p.setFreezeTicks(100);
+            player.setFreezeTicks(100);
         }
 
-        if (TemperatureConstants.DESERT_BIOMES.contains(p.getLocation().getBlock().getBiome())) {
+        if (TemperatureConstants.DESERT_BIOMES.contains(player.getLocation().getBlock().getBiome())) {
             temperature += TemperatureConstants.DESERT_TEMPERATURE_DELTA;
         }
 
-        if (TemperatureConstants.SNOWY_BIOMES.contains(p.getLocation().getBlock().getBiome())) {
+        if (TemperatureConstants.SNOWY_BIOMES.contains(player.getLocation().getBlock().getBiome())) {
             temperature += TemperatureConstants.SNOWY_TEMPERATURE_DELTA;
         }
 
         if (temperature > TemperatureConstants.BASE_MAX_TEMPERATURE) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 21, 1, false, false, false));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 21, 1, false, false, false));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 21, 1, false, false, false));
+            player.addPotionEffect(
+                    new PotionEffect(PotionEffectType.WEAKNESS, 21,
+                            1, false, false, false));
+            player.addPotionEffect(
+                    new PotionEffect(PotionEffectType.DARKNESS, 21,
+                            1, false, false, false));
+            player.addPotionEffect(
+                    new PotionEffect(PotionEffectType.SLOWNESS, 21,
+                            1, false, false, false));
         }
 
         return (float) Math.ceil(temperature * 100.0f) / 100.0f;
