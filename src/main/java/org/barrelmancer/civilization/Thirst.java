@@ -2,7 +2,7 @@ package org.barrelmancer.civilization;
 
 import org.barrelmancer.civilization.constants.ThirstConstants;
 import org.barrelmancer.civilization.memory.SavablePlayerMemory;
-import org.barrelmancer.civilization.util.PlayerMemoryUtility;
+import org.barrelmancer.civilization.utility.PlayerMemoryUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -25,7 +25,7 @@ public class Thirst implements Runnable {
                         1, false, false, false));
 
                 player.addPotionEffect(new PotionEffect(
-                        PotionEffectType.WITHER,
+                        PotionEffectType.POISON,
                         ThirstConstants.BASE_THIRST_DECREASE_RATE + 1,
                         0, false, false, false));
             }

@@ -6,9 +6,10 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.barrelmancer.civilization.constants.TemperatureConstants;
 import org.barrelmancer.civilization.constants.UIConstants;
+import org.barrelmancer.civilization.item.ItemBuilder;
 import org.barrelmancer.civilization.memory.DynamicPlayerMemory;
 import org.barrelmancer.civilization.memory.SavablePlayerMemory;
-import org.barrelmancer.civilization.util.PlayerMemoryUtility;
+import org.barrelmancer.civilization.utility.PlayerMemoryUtility;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -72,13 +73,10 @@ public class GeneralEvents implements Listener {
         }
 
         if (temperature != null) {
-            List<Component> lore = Collections.singletonList(
-                    Component.text("+ " + temperature + "°C")
-                            .style(Style.style(TextColor.color(UIConstants.INFORMATION_COLOR), TextDecoration.ITALIC.withState(false)))
-            );
-            meta.lore(lore);
-            clickedItem.setItemMeta(meta);
-            event.setCurrentItem(clickedItem);
+            ItemStack updatedItem = ItemBuilder.from(clickedItem)
+                    .addLore("+ " + temperature + "°C", UIConstants.INFORMATION_COLOR)
+                    .build();
+            event.setCurrentItem(updatedItem);
         }
     }
 }

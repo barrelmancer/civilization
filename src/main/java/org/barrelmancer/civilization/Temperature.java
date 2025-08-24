@@ -2,7 +2,7 @@ package org.barrelmancer.civilization;
 
 import org.barrelmancer.civilization.constants.TemperatureConstants;
 import org.barrelmancer.civilization.memory.DynamicPlayerMemory;
-import org.barrelmancer.civilization.util.PlayerMemoryUtility;
+import org.barrelmancer.civilization.utility.PlayerMemoryUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

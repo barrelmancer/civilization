@@ -6,5 +6,5 @@ load: STARTUP
 commands:
   setAge:
     description: Sets a player's age
-    usage: /setAge <player> <age>
+    usage: /setage <player> <age>
     permission: civilization.setage

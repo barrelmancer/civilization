@@ -1,13 +1,11 @@
 package org.barrelmancer.civilization.events;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.barrelmancer.civilization.constants.UIConstants;
 import org.barrelmancer.civilization.constants.WorldConstants;
-import org.barrelmancer.civilization.util.PlayerMemoryUtility;
-import org.barrelmancer.civilization.util.UIUtils;
-import org.bukkit.Color;
+import org.barrelmancer.civilization.item.ItemBuilder;
+import org.barrelmancer.civilization.utility.PlayerMemoryUtility;
+import org.barrelmancer.civilization.utility.UIUtility;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -19,9 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.RayTraceResult;
 import org.slf4j.Logger;
@@ -48,19 +44,7 @@ public class WorldEvents implements Listener {
 
         if (player.getGameMode() != GameMode.CREATIVE)
             item.subtract();
-        ItemStack waterBottle = new ItemStack(Material.POTION);
-        PotionMeta meta = (PotionMeta) waterBottle.getItemMeta();
-        meta.setBasePotionType(PotionType.WATER);
-        meta.setColor(Color.fromRGB(
-                UIConstants.DIRTY_WATER_COLOR.red(),
-                UIConstants.DIRTY_WATER_COLOR.green(),
-                UIConstants.DIRTY_WATER_COLOR.blue()
-        ));
-        meta.displayName(
-                Component.text("Dirty Water").style(Style.style(UIConstants.DIRTY_WATER_COLOR, TextDecoration.ITALIC.withState(false)))
-        );
-        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        waterBottle.setItemMeta(meta);
+        ItemStack waterBottle = UIUtility.createDirtyWaterPotion();
         player.getInventory().addItem(waterBottle).values().stream()
                 .forEach(i -> player.getWorld().dropItemNaturally(player.getLocation(), i));
     }
@@ -82,10 +66,9 @@ public class WorldEvents implements Listener {
         );
 
         if (!playerAge.getAvailableOres().contains(block.getType())) {
-            log.info("CANCELING EVENT");
             event.setCancelled(true);
             player.sendMessage(Component.text(
-                            "You cannot mine " + UIUtils.toLowerCaseWithSpaces(block.getType()) + " in the " + playerAge.getDisplayName() + "!")
+                            "You cannot mine " + UIUtility.toLowerCaseWithSpaces(block.getType()) + " in the " + playerAge.getDisplayName() + "!")
                     .color(UIConstants.WARNING_COLOR));
         }
     }
